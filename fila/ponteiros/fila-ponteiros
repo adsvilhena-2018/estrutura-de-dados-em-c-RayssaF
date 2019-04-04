@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h> 
+
+typedef struct no{
+    int valor;
+    struct no* proximo;
+}Node;
+
+typedef struct fila{
+    int tamanho;
+    Node* head;
+    Node* end;
+}queue;
+
+queue* criaFila(queue* fila){
+    fila ->head = NULL;
+    fila ->end = NULL;
+    fila ->tamanho = 0;
+    return fila;
+}
+
+void inserirInicio(queue *fila, int dado) {
+
+    if (fila->head == NULL) { 
+        fila->head = malloc(sizeof(Node)); 
+        fila->end = fila->head; 
+        fila->head->proximo = NULL; 
+        fila->head->valor = dado; 
+   
+    } else { // se a condição não for verdadeira 
+        
+        Node *new = malloc(sizeof(Node)); //
+        new->valor = dado;
+        new->proximo = NULL;
+        fila->end->proximo = new;
+        fila->end = new;
+        fila->tamanho++;  
+    }
+
+}
+
+void removerInicio(queue* fila){
+    Node *cabeca = fila->head;
+    fila->head = cabeca->proximo;
+    free(cabeca);
+}
+
+void imprimirLista(queue Fila){
+    Node *cabeca = Fila.head;
+
+    while (cabeca != NULL) {
+        printf("|%d|", cabeca->valor);
+        cabeca = cabeca->proximo;
+    }
+    printf("\n");
+}
+
+int main() {
+
+    queue fila;
+    criaFila(&fila);
+
+    inserirInicio(&fila,1);
+    inserirInicio(&fila,2);
+    inserirInicio(&fila,3);
+    inserirInicio(&fila,4);
+    inserirInicio(&fila,5);
+    printf("FILA \n");
+    imprimirLista(fila);
+
+    printf("FILA ATUALIZADA \n");
+    removerInicio(&fila);
+    imprimirLista(fila);
+
+
+
+    return 0;
+}
